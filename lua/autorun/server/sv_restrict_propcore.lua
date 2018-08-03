@@ -1,41 +1,43 @@
--- Propcore is allowed to everyone, but functions in the restrictedFunctions array will be restricted to devotee+ only
+-- Restricts PropCore functions based on rank
+include("sv_restricted_propcore_functions.lua")
 
 local function restrictPropCoreFunctions()
-    local disallowedRanks = {}
-    disallowedRanks["user"] = true
-    disallowedRanks["regular"] = true
-
-    local restrictedFunctions = {
-        "propSpawn(sn)",
-        "propSpawn(en)",
-        "propSpawn(svn)",
-        "propSpawn(evn)",
-        "propSpawn(san)",
-        "propSpawn(ean)",
-        "propSpawn(svan)",
-        "propSpawn(evan)",
-        "seatSpawn(sn)",
-        "seatSpawn(svan)",
-        "setPos(e:v)",
-        "reposition(e:v)",
-        "propManipulate(e:vannn)"
-        --"propBreak(e:)"
+    local rankRestrictedFunctions = {
+        'admin':   ADMIN_RESTRICTED_FUNCTIONS,
+        'regular': REGULAR_RESTRICTED_FUNCTIONS,
+        'user':    USER_RESTRICTED_FUNCTIONS
     }
 
-    for _, signature in pairs( restrictedFunctions ) do
+    for _, signature in pairs( RESTRICTED_FUNCTIONS ) do
         local oldFunc = wire_expression2_funcs[signature][3]
-
         wire_expression2_funcs[signature][3] = function( self, ... )
-            if ( disallowedRanks[self.player:GetUserGroup()] == nil ) then
-                local isInBuildMode = self.player:GetNWBool("PVPMode", false) == false
+            local playerGroup       = self.player:GetUserGroup()
+            local groupRestrictions = rankRestrictedFunctions[playerGroup] or rankRestrictedFunctions['user']
+            local restrictions      = groupRestrictions[signature]
 
-                if( isInBuildMode or self.player:IsAdmin() ) then
-                    return oldFunc( self, ... )
+            -- No restriction for this rank
+            if not restrictions then return oldFunc( self, ... )
+
+            -- No access at all
+            if restrictions.pvp and restrictions.build then
+                self.player:ChatPrint( "You don't have access to " .. signature )
+                return
+            end
+
+            -- Some sort of access exists
+            local isInBuildMode = self.player:GetNWBool("PVPMode", false) == false
+            if isInBuildMode then
+                if restrictions.build then
+                    self.player:ChatPrint( "You can't use " .. signature .. " in Build mode" )
                 else
-                    self.player:ChatPrint( "You can't use PropCore in PvP mode" )
+                    return oldFunc( self, ... )
                 end
             else
-                self.player:ChatPrint( "You don't have access to " .. signature )
+                if restrictions.pvp then                
+                    self.player:ChatPrint( "You can't use " .. signature .. " in PvP mode" )
+                else
+                    return oldFunc( self, ... )
+                end
             end
         end
     end
