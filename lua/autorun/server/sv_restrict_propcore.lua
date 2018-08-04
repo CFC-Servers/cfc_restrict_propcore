@@ -16,7 +16,7 @@ local function restrictPropCoreFunctions()
             local restrictions      = groupRestrictions[signature]
 
             -- No restriction for this rank
-            if not restrictions then return oldFunc( self, ... )
+            if not restrictions then return oldFunc( self, ... ) end
 
             -- No access at all
             if restrictions.pvp and restrictions.build then
