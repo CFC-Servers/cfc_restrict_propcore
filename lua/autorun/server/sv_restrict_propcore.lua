@@ -1,13 +1,7 @@
 -- Restricts PropCore functions based on rank
-include("sv_restricted_propcore_functions.lua")
 
+local restrictedFunctions, rankRestrictedFunctions = require "sv_restricted_propcore_functions"
 local function restrictPropCoreFunctions()
-    local rankRestrictedFunctions = {
-        'admin':   ADMIN_RESTRICTED_FUNCTIONS,
-        'regular': REGULAR_RESTRICTED_FUNCTIONS,
-        'user':    USER_RESTRICTED_FUNCTIONS
-    }
-
     for _, signature in pairs( RESTRICTED_FUNCTIONS ) do
         local oldFunc = wire_expression2_funcs[signature][3]
         wire_expression2_funcs[signature][3] = function( self, ... )

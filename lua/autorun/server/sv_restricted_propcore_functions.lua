@@ -1,6 +1,6 @@
 -- Restricted Propcore Functions
 ---------------------------------------------------------------------------------------
-RESTRICTED_FUNCTIONS = {
+local RESTRICTED_FUNCTIONS = {
   'propSpawn(sn)',
   'propSpawn(en)',
   'propSpawn(svn)',
@@ -20,10 +20,10 @@ RESTRICTED_FUNCTIONS = {
 -- Rank Restriction Tables
 ---------------------------------------------------------------------------------------
 -- Admin rank restricted functions
-ADMIN_RESTRICTED_FUNCTIONS = {}
+local ADMIN_RESTRICTED_FUNCTIONS = {}
 
 -- Regular rank restricted functions
-REGULAR_RESTRICTED_FUNCTIONS = ADMIN_RESTRICTED_FUNCTIONS
+local REGULAR_RESTRICTED_FUNCTIONS = ADMIN_RESTRICTED_FUNCTIONS
 REGULAR_RESTRICTED_FUNCTIONS['propSpawn(sn)']           = {build = true, pvp = true}
 REGULAR_RESTRICTED_FUNCTIONS['propSpawn(en)']           = {build = true, pvp = true}
 REGULAR_RESTRICTED_FUNCTIONS['propSpawn(svn)']          = {build = true, pvp = true}
@@ -40,5 +40,13 @@ REGULAR_RESTRICTED_FUNCTIONS['reposition(e:v)']         = {build = true, pvp = t
 --REGULAR_RESTRICTED_FUNCTIONS['propBreak(e:)']         = {build = true, pvp = true}
 
 -- User rank restricted functions
-USER_RESTRICTED_FUNCTIONS = REGULAR_RESTRICTED_FUNCTIONS
+local USER_RESTRICTED_FUNCTIONS = REGULAR_RESTRICTED_FUNCTIONS
 ---------------------------------------------------------------------------------------
+
+local RESTRICTED_FUNCTIONS_BY_RANK = {
+    admin   = ADMIN_RESTRICTED_FUNCTIONS,
+    regular = REGULAR_RESTRICTED_FUNCTIONS,
+    user    = USER_RESTRICTED_FUNCTIONS
+}
+
+return RESTRICTED_FUNCTIONS, RESTRICTED_FUNCTIONS_BY_RANK
