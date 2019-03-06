@@ -15,19 +15,6 @@ local RESTRICTED_FUNCTIONS = {
   'propManipulate(e:vannn)',
   'reposition(e:v)'
 }
----------------------------------------------------------------------------------------
-
--- Get a copy of the provided table
-local function copyTableByValue(tab)
-    returnTable = {}
-
-    -- Copy by value
-    for key, value in pairs( tab ) do
-        returnTable[key] = value
-    end
-
-    return returnTable
-end
 
 -- Rank Restriction Tables
 ---------------------------------------------------------------------------------------
@@ -52,7 +39,7 @@ REGULAR_RESTRICTED_FUNCTIONS['reposition(e:v)']         = {build = true, pvp = t
 --REGULAR_RESTRICTED_FUNCTIONS['propBreak(e:)']         = {build = true, pvp = true}
 
 -- User rank restricted functions
-local USER_RESTRICTED_FUNCTIONS = copyTableByValue( REGULAR_RESTRICTED_FUNCTIONS )
+local USER_RESTRICTED_FUNCTIONS = table.Copy( REGULAR_RESTRICTED_FUNCTIONS )
 ---------------------------------------------------------------------------------------
 
 local RESTRICTED_FUNCTIONS_BY_RANK = {
