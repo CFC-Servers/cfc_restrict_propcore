@@ -22,7 +22,7 @@ local RESTRICTED_FUNCTIONS = {
 local ADMIN_RESTRICTED_FUNCTIONS = {}
 
 -- Regular rank restricted functions
-local REGULAR_RESTRICTED_FUNCTIONS = copyTableByValue( ADMIN_RESTRICTED_FUNCTIONS )
+local REGULAR_RESTRICTED_FUNCTIONS = table.Copy( ADMIN_RESTRICTED_FUNCTIONS )
 REGULAR_RESTRICTED_FUNCTIONS['propSpawn(sn)']           = {build = true, pvp = true}
 REGULAR_RESTRICTED_FUNCTIONS['propSpawn(en)']           = {build = true, pvp = true}
 REGULAR_RESTRICTED_FUNCTIONS['propSpawn(svn)']          = {build = true, pvp = true}
