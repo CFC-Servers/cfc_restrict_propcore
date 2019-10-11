@@ -2,7 +2,7 @@
 
 local restrictedFunctions, rankRestrictedFunctions = include "sv_restricted_propcore_functions.lua"
 local function restrictPropCoreFunctions()
-    for _, signature in pairs( RESTRICTED_FUNCTIONS ) do
+    for _, signature in pairs( restrictedFunctions ) do
         local oldFunc = wire_expression2_funcs[signature][3]
         wire_expression2_funcs[signature][3] = function( self, ... )
             local playerGroup       = self.player:GetUserGroup()
