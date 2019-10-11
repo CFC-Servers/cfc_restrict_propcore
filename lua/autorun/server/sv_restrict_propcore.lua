@@ -8,9 +8,6 @@ local function restrictPropCoreFunctions()
             local playerGroup       = self.player:GetUserGroup()
             local groupRestrictions = rankRestrictedFunctions[playerGroup] or rankRestrictedFunctions['user']
             local restrictions      = groupRestrictions[signature]
-
-            if ( disallowedRanks[self.player:GetUserGroup()] == nil ) then
-                local isInBuildMode = self.player:GetNWBool("CFC_PvP_Mode", false) == false
         
             -- No restriction for this rank
             if not restrictions then return oldFunc( self, ... ) end
