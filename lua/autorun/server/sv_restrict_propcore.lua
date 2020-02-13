@@ -5,7 +5,6 @@ function restrictPropCoreFunctions()
     disallowedRanks["user"] = true
     disallowedRanks["regular"] = true
     
-
     local restrictedFunctions = {
         "propSpawn(sn)",
         "propSpawn(en)",
@@ -23,10 +22,9 @@ function restrictPropCoreFunctions()
         --"propBreak(e:)"
     }
     
-    local globalrestrictedFunctions = {
+    local adminOnlyFunctions = {
         "use(e:)"   
     }
-
     
     for _, signature in pairs( restrictedFunctions ) do
         if wire_expression2_funcs then
@@ -48,7 +46,7 @@ function restrictPropCoreFunctions()
         end
     end
     
-    for _, signature in pairs( globalrestrictedFunctions ) do
+    for _, signature in pairs( adminOnlyFunctions ) do
         if wire_expression2_funcs then
             local oldFunc = wire_expression2_funcs[signature][3]
 
