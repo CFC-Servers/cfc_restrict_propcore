@@ -51,7 +51,7 @@ function restrictPropCoreFunctions()
             local oldFunc = wire_expression2_funcs[signature][3]
 
             wire_expression2_funcs[signature][3] = function( self, ... )
-                if ( self.player:IsAdminI() ) then
+                if ( self.player:IsAdmin() ) then
                     local isInBuildMode = self.player:GetNWBool("CFC_PvP_Mode", false) == false
 
                     if( isInBuildMode or self.player:IsAdmin() ) then
