@@ -54,7 +54,7 @@ function restrictPropCoreFunctions()
                 if ( self.player:IsAdmin() ) then
                     local isInBuildMode = self.player:GetNWBool("CFC_PvP_Mode", false) == false
 
-                    if( isInBuildMode ) then
+                    if( isInBuildMode or self.player:IsAdmin() ) then
                         return oldFunc( self, ... )
                     else
                         self.player:ChatPrint( "You can't use PropCore in PvP mode" )
