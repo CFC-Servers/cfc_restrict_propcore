@@ -50,18 +50,10 @@ function restrictPropCoreFunctions()
         if wire_expression2_funcs then
             local oldFunc = wire_expression2_funcs[signature][3]
 
-            wire_expression2_funcs[signature][3] = function( self, ... )
-                if ( self.player:IsAdmin() ) then
-                    local isInBuildMode = self.player:GetNWBool("CFC_PvP_Mode", false) == false
-
-                    if( isInBuildMode or self.player:IsAdmin() ) then
-                        return oldFunc( self, ... )
-                    else
-                        self.player:ChatPrint( "You can't use PropCore in PvP mode" )
-                    end
+               wire_expression2_funcs[signature][3] = function( self, ... )
+               if ( self.player:IsAdmin() ) then
+                    return oldFunc( self, ... )
                 else
-                    self.player:ChatPrint( "You don't have access to " .. signature )
-                end
             end
         end
     end
