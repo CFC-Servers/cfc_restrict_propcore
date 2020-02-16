@@ -53,7 +53,9 @@ function restrictPropCoreFunctions()
                wire_expression2_funcs[signature][3] = function( self, ... )
                if ( self.player:IsAdmin() ) then
                     return oldFunc( self, ... )
-                else
+               else
+                    self.player:ChatPrint( "You don't have access to " .. signature )
+               end
             end
         end
     end
