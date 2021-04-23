@@ -35,14 +35,14 @@ function CFCPropcoreRestrict.removePlayersFromPropcoreWhitelist( players )
 end
 
 function CFCPropcoreRestrict.playerIsWhitelisted( ply )
-    return whitelistedPlayers[ply:SteamID()] ~= nil
+    return rawget( whitelistedPlayers, ply:SteamID() ) ~= nil
 end
 
 local disallowedRanks = {}
 disallowedRanks["user"] = true
 
 local function isCorrectRank( ply )
-    return not disallowedRanks[ply:GetUserGroup()]
+    return not rawget( disallowedRanks, ply:GetUserGroup() )
 end
 
 local function isInPvp( ply )
@@ -58,13 +58,16 @@ local function adminOnlyCondition( self, ... )
     return false, "Only Admins can use this function"
 end
 
+local playerIsWhitelisted = CFCPropcoreRestrict.playerIsWhitelisted
 local function restrictedCondition( self, ... )
-    if self.player:IsAdmin() then return true end
+    local ply = self.player
 
-    if isInPvp( self.player ) then return false, "Cannot be used in PvP mode" end
+    if ply:IsAdmin() then return true end
 
-    if CFCPropcoreRestrict.playerIsWhitelisted( self.player ) then return true end
-    if not isCorrectRank( self.player ) then return false, "Incorrect Rank" end
+    if isInPvp( ply ) then return false, "Cannot be used in PvP mode" end
+
+    if playerIsWhitelisted( ply ) then return true end
+    if not isCorrectRank( ply ) then return false, "Incorrect Rank" end
 
     return true
 end
