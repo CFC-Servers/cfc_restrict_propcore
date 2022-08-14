@@ -59,7 +59,7 @@ local function restrictedCondition( self, ... )
     local ply = self.player
 
     if ply:IsAdmin() then return true end
-    if ply:isInPvp() then return false, "Cannot be used in PvP mode" end
+    if ply:IsInPvp() then return false, "Cannot be used in PvP mode" end
 
     if playerIsWhitelisted( ply ) then return true end
     if not isCorrectRank( ply ) then return false, "Incorrect Rank" end
