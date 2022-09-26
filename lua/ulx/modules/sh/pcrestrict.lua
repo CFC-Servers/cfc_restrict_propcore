@@ -36,7 +36,7 @@ PCWhitelistAdd:addParam{ type = ULib.cmds.PlayersArg }
 PCWhitelistAdd:addParam{ type = ULib.cmds.BoolArg, invisible = true }
 PCWhitelistAdd:defaultAccess( ULib.ACCESS_ADMIN )
 PCWhitelistAdd:help( "Adds/Removes specified target(s) to a propcore whitelist" )
-PCWhitelistAdd:setOpposite( "ulx denypropcore", {_, _, true}, "!denypropcore" )
+PCWhitelistAdd:setOpposite( "ulx denypropcore", { _, _, true }, "!denypropcore" )
 
 local function isInPropcoreWhitelist( callingPlayer, targetPlayers )
     for _, ply in pairs( targetPlayers ) do
